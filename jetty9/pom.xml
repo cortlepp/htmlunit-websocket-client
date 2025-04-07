@@ -3,33 +3,28 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.htmlunit</groupId>
-    <artifactId>htmlunit-websocket-client</artifactId>
+    <parent>
+        <groupId>org.htmlunit</groupId>
+        <artifactId>htmlunit-websocket-client-parent</artifactId>
+        <version>4.11.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>htmlunit-websocket-client-jetty9</artifactId>
     <version>4.11.0</version>
 
-    <name>HtmlUnit WebSocket Client</name>
-    <organization>
-        <name>Gargoyle Software Inc.</name>
-        <url>http://www.GargoyleSoftware.com/</url>
-    </organization>
+    <name>HtmlUnit WebSocket Client Jetty9</name>
     <packaging>jar</packaging>
     <description>
         The default WebSocket client used by HtmlUnit.
         The implementation is based on Jetty 9.
     </description>
-    <url>https://www.htmlunit.org</url>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-        <additionalparam>-Xdoclint:none</additionalparam>
-
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-
         <jetty.version>9.4.57.v20241219</jetty.version>
-
-        <dependencycheck.version>10.0.4</dependencycheck.version>
+        <dependencycheck.version>12.1.0</dependencycheck.version>
     </properties>
 
     <dependencies>
@@ -47,10 +42,10 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependencycheck.version}</version>
                 <configuration>
-                    <suppressionFiles>owasp-suppressions.xml</suppressionFiles>
+                    <suppressionFile>${project.basedir}/owasp-suppressions.xml</suppressionFile>
                     <failBuildOnCVSS>0</failBuildOnCVSS>
                     <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-                    <nvdDatafeedUrl>https://mirror.cveb.in/nvd/json/cve/1.1/nvdcve-1.1-{0}.json.gz</nvdDatafeedUrl>
+                    <nvdDatafeedUrl>https://mirror.cveb.in/nvd/json/cve/1.1/nvdcve-1.1-modified.json.gz</nvdDatafeedUrl>
                 </configuration>
                 <executions>
                     <execution>
@@ -162,7 +157,6 @@
                     <quiet>true</quiet>
                     <!-- see https://stackoverflow.com/questions/69320220/maven-javadoc-listed-classes-twice -->
                     <sourcepath>${basedir}/src/main/java</sourcepath>
-                    <additionalparam>--allow-script-in-comments</additionalparam>
                     <links>
                         <link>https://docs.oracle.com/javase/8/docs/api/</link>
                         <link>https://commons.apache.org/logging/apidocs/</link>
@@ -193,66 +187,5 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/HtmlUnit/htmlunit/issues/</url>
-    </issueManagement>
-    <inceptionYear>2021</inceptionYear>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:git:https://github.com/HtmlUnit/htmlunit</connection>
-        <developerConnection>scm:git:https://github.com/HtmlUnit/htmlunit</developerConnection>
-        <url>https://github.com/HtmlUnit/htmlunit</url>
-    </scm>
-
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>https://jenkins.wetator.org/view/HtmlUnit/</url>
-    </ciManagement>
-
-    <developers>
-        <developer>
-            <name>Ronald Brill</name>
-            <id>rbri</id>
-            <email>rbri@rbri.de</email>
-            <url>http://www.wetator.org/</url>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
-    <contributors>
-    </contributors>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>s01-sonatype-nexus-snapshots</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>s01-sonatype-nexus-staging</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <id>OSS Sonatype snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
 
 </project>
