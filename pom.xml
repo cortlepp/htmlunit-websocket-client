@@ -5,7 +5,7 @@
 
     <groupId>org.htmlunit</groupId>
     <artifactId>htmlunit-websocket-client-parent</artifactId>
-    <version>4.11.0</version>
+    <version>5.0.0-SNAPSHOT</version>
 
     <name>HtmlUnit WebSocket Client Parent</name>
     <packaging>pom</packaging>
@@ -83,6 +83,7 @@
     <modules>
         <module>jetty9</module>
         <module>native</module>
+        <module>api</module>
     </modules>
 
 </project>
