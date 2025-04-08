@@ -7,6 +7,7 @@
         <groupId>org.htmlunit</groupId>
         <artifactId>htmlunit-websocket-client-parent</artifactId>
         <version>5.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>htmlunit-websocket-client-native</artifactId>
@@ -17,9 +18,16 @@
     </description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.htmlunit</groupId>
+            <artifactId>htmlunit-websocket-client-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

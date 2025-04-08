@@ -15,11 +15,8 @@
 package org.htmlunit.websocket.client.api;
 
 import java.io.Serializable;
-import java.net.HttpCookie;
-import java.net.URL;
-import java.util.List;
+import java.net.CookieHandler;
 import java.util.concurrent.Executor;
-import java.util.function.Function;
 
 /**
  * Helper to have no direct dependency to the WebSocket client
@@ -35,5 +32,5 @@ public interface WebSocketAdapterFactory extends Serializable {
      * @param webSocketListener the {@link WebSocketListener}
      * @return a new {@link WebSocketAdapter}
      */
-    WebSocketAdapter buildWebSocketAdapter(final WebSocketListener listener, final Function<URL, List<HttpCookie>> urlCookieMapper, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize);
+    WebSocketAdapter buildWebSocketAdapter(final WebSocketListener listener, final CookieHandler cookieHandler, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize);
 }

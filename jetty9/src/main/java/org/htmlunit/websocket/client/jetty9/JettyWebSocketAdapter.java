@@ -1,14 +1,11 @@
 package org.htmlunit.websocket.client.jetty9;
 
 import java.io.IOException;
-import java.net.HttpCookie;
+import java.net.CookieHandler;
 import java.net.URI;
-import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
-import java.util.function.Function;
 
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.websocket.api.Session;
@@ -35,8 +32,8 @@ public final class JettyWebSocketAdapter implements WebSocketAdapter {
          * {@inheritDoc}
          */
         @Override
-        public WebSocketAdapter buildWebSocketAdapter(final WebSocketListener listener, final Function<URL, List<HttpCookie>> urlCookieMapper, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize) {
-            return new JettyWebSocketAdapter(listener, urlCookieMapper, executor, useInsecureSSL, maxBinaryMessageSize, maxBinaryMessageBufferSize, maxTextMessageSize, maxTextMessageBufferSize);
+        public WebSocketAdapter buildWebSocketAdapter(final WebSocketListener listener, final CookieHandler cookieHandler, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize) {
+            return new JettyWebSocketAdapter(listener, cookieHandler, executor, useInsecureSSL, maxBinaryMessageSize, maxBinaryMessageBufferSize, maxTextMessageSize, maxTextMessageBufferSize);
         }
     }
 
@@ -50,7 +47,7 @@ public final class JettyWebSocketAdapter implements WebSocketAdapter {
     /**
      * Ctor.
      */
-    public JettyWebSocketAdapter(final WebSocketListener listener, final Function<URL, List<HttpCookie>> urlCookieMapper, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize) {
+    public JettyWebSocketAdapter(final WebSocketListener listener, final CookieHandler cookieHandler, final Executor executor, boolean useInsecureSSL, int maxBinaryMessageSize, int maxBinaryMessageBufferSize, int maxTextMessageSize, int maxTextMessageBufferSize) {
         super();
 
         if (useInsecureSSL) {
@@ -68,8 +65,7 @@ public final class JettyWebSocketAdapter implements WebSocketAdapter {
         // use the same executor as the rest
         client_.setExecutor(executor);
 
-        //todo how to do this without a dependency to the htmlunit cookie store
-        client_.getHttpClient().setCookieStore(new WebSocketCookieStore(urlCookieMapper));
+        client_.getHttpClient().setCookieStore(new WebSocketCookieStore(cookieHandler));
 
         final WebSocketPolicy policy = client_.getPolicy();
         int size = maxBinaryMessageSize;
